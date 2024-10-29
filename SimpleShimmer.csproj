@@ -9,7 +9,22 @@
 	<RepositoryUrl>https://github.com/mouhamedhazem149/SimpleShimmer.Avalonia</RepositoryUrl>
 	<description>Shimmering animation helper for Avalonia</description>
 	<PackageId>SimpleShimmer.Avalonia</PackageId>
+	<Version>1.0.1</Version>
   </PropertyGroup>
+
+  <ItemGroup>
+    <AvaloniaXaml Remove="images\**" />
+    <Compile Remove="images\**" />
+    <EmbeddedResource Remove="images\**" />
+    <None Remove="images\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove=".gitattributes" />
+    <None Remove=".gitignore" />
+    <None Remove="LICENSE" />
+    <None Remove="README.md" />
+  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Behaviors\" />
