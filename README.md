@@ -2,9 +2,9 @@
  Shimmering animation helper for winui
 
 # Screenshots
-![](https://github.com/mouhamedhazem149/SimpleShimmerForAvalonia/blob/main/images/PanelExample.gif)
-![](https://github.com/mouhamedhazem149/SimpleShimmerForAvalonia/blob/main/images/ButtonExample.gif)
-![](https://github.com/mouhamedhazem149/SimpleShimmerForAvalonia/blob/main/images/TextBlockExample.gif)
+![](https://github.com/mouhamedhazem149/SimpleShimmer.Avalonia/blob/main/images/PanelExample.gif)
+![](https://github.com/mouhamedhazem149/SimpleShimmer.Avalonia/blob/main/images/ButtonExample.gif)
+![](https://github.com/mouhamedhazem149/SimpleShimmer.Avalonia/blob/main/images/TextBlockExample.gif)
 
 # How To Use
 
