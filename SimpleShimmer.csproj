@@ -4,6 +4,10 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	<Authors>Mohamed Hazem</Authors>
+	<PackageProjectUrl>https://github.com/mouhamedhazem149/SimpleShimmer</PackageProjectUrl>
+	<RepositoryUrl>https://github.com/mouhamedhazem149/SimpleShimmer</RepositoryUrl>
+	<description>Shimmering animation helper for WinUI</description>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.1.4" />
+    <PackageReference Include="Avalonia.Xaml.Behaviors" Version="11.1.0.4" />
   </ItemGroup>
 
 </Project>
