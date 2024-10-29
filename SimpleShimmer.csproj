@@ -5,8 +5,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	<Authors>Mohamed Hazem</Authors>
-	<PackageProjectUrl>https://github.com/mouhamedhazem149/SimpleShimmer</PackageProjectUrl>
-	<RepositoryUrl>https://github.com/mouhamedhazem149/SimpleShimmer</RepositoryUrl>
+	<PackageProjectUrl>https://github.com/mouhamedhazem149/SimpleShimmer.Avalonia</PackageProjectUrl>
+	<RepositoryUrl>https://github.com/mouhamedhazem149/SimpleShimmer.Avalonia</RepositoryUrl>
 	<description>Shimmering animation helper for WinUI</description>
   </PropertyGroup>
 
