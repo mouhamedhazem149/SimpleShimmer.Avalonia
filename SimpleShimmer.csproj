@@ -7,7 +7,7 @@
 	<Authors>Mohamed Hazem</Authors>
 	<PackageProjectUrl>https://github.com/mouhamedhazem149/SimpleShimmer.Avalonia</PackageProjectUrl>
 	<RepositoryUrl>https://github.com/mouhamedhazem149/SimpleShimmer.Avalonia</RepositoryUrl>
-	<description>Shimmering animation helper for WinUI</description>
+	<description>Shimmering animation helper for Avalonia</description>
   </PropertyGroup>
 
   <ItemGroup>
