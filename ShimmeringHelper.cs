@@ -70,7 +70,7 @@ public sealed class ShimmeringHelper
         _gradientVisual = new();
 
         var color = Color;
-        
+
         if (color is not null)
         {
             _gradientVisual.UpdateGradient(color.Value);
@@ -78,28 +78,25 @@ public sealed class ShimmeringHelper
         }
 
         var brush = CustomBrush;
-        
+
         if (brush is not null)
         {
             _gradientVisual.UpdateBrush(brush);
+            return;
         }
-        else
-        {
-            AddColorListeners();
-            
-            color = CalculateAlternativeColor(_associatedObject!);
-            _gradientVisual.UpdateGradient(color.Value);
-        }
+
+        AddColorListeners();
+
+        color = CalculateAlternativeColor(_associatedObject!);
+        _gradientVisual.UpdateGradient(color.Value);
     }
 
     private void UpdateMaskBrush(Compositor _compositor)
     {
         ArgumentNullException.ThrowIfNull(_gradientVisual);
-        
+
         _maskBrush = _compositor.CreateCustomVisual(_gradientVisual);
         _maskBrush.ClipToBounds = true;
-
-        ElementComposition.SetElementChildVisual(_associatedObject!, _maskBrush);
     }
     
     private void OnLoaded(object? sender, RoutedEventArgs? e)
@@ -157,12 +154,8 @@ public sealed class ShimmeringHelper
         return true;
     }
 
-    private Vector3D? _stopOffset;
     private void UpdateAnimation()
     {
-        ArgumentNullException.ThrowIfNull(_associatedObject);
-        ArgumentNullException.ThrowIfNull(_maskBrush);
-        
         StopAnimation();
 
         HandleCornerRadiusClip(_associatedObject);
@@ -201,8 +194,6 @@ public sealed class ShimmeringHelper
 
     private void UpdateAnimationKeyFrames(double minOffsetX, double OffsetY, double maxOffsetX)
     {
-        ArgumentNullException.ThrowIfNull(compositor);
-        
         //TODO: animationFrames can't be updated?, just reset the whole thing
         _animation = compositor.CreateVector3DKeyFrameAnimation();
         _animationEasing = new();
@@ -211,7 +202,6 @@ public sealed class ShimmeringHelper
         _animation.IterationBehavior = AnimationIterationBehavior.Forever;
         
         Vector3D startOffset = new(minOffsetX, OffsetY, 0);
-        _stopOffset = startOffset;
         
         _animation.InsertKeyFrame(0f, new(minOffsetX, OffsetY, 0), _animationEasing);
         //u can just make it width, width * 2 (the difference between animation and actual _maskVisual Width) gives a pause between iterations
@@ -220,17 +210,16 @@ public sealed class ShimmeringHelper
 
     private void StartAnimation()
     {
+        ElementComposition.SetElementChildVisual(_associatedObject!, _maskBrush);
         _maskBrush?.StartAnimation("Offset", _animation!);
     }
 
     private void StopAnimation()
     {
         ArgumentNullException.ThrowIfNull(_maskBrush);
-
-        if (_stopOffset is not null)
-        {
-            _maskBrush.Offset = _stopOffset.Value;
-        }
+        _maskBrush.Offset = new Vector3D(-1 * _associatedObject.Bounds.Width, -_associatedObject.Bounds.Height,
+            double.NegativeInfinity);
+        ElementComposition.SetElementChildVisual(_associatedObject!, null);
     }
 
     #region IsActive
@@ -400,8 +389,21 @@ public sealed class ShimmeringHelper
         var sat = originColor.GetSaturation();
         return GetColorFromHSL(lum, hue, sat);
     }
+    
+    private static Color GetColorFromHSL(double lum, double hue, double sat, byte alpha = 0xFF)
+    {
+        var a = sat * Math.Min(lum, 1 - lum);
+        return Avalonia.Media.Color.FromArgb(alpha, nFunk(0), nFunk(8), nFunk(4));
 
-    private static Color GetColorFromHSL(double lum, double hue, double sat)
+        byte nFunk(double n)
+        {
+            var k = (n + hue / 30) % 12;
+            var factor = Math.Max(-1, Math.Min(Math.Min(k - 3, 9 - k), 1));
+            return (byte)Math.Round((lum - a * factor) * 255);
+        }
+    }
+    
+    private static Color GetColorFromHSL2(double lum, double hue, double sat)
     {
         if (lum == 0)
         {
