@@ -1,5 +1,5 @@
 # SimpleShimmer
- Shimmering animation helper for winui
+ Shimmering animation helper for Avalonia
 
 # Screenshots
 ![](https://github.com/mouhamedhazem149/SimpleShimmer.Avalonia/blob/main/images/PanelExample.gif)
