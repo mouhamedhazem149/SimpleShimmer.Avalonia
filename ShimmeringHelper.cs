@@ -170,8 +170,6 @@ public sealed class ShimmeringHelper
         if (_associatedObject is TextBlock textBlock)
         {
             var textLayoutWidth = textBlock.TextLayout.Width;
-
-            _maskBrush.Size = new(textLayoutWidth, textBlock.TextLayout.Height);
             var offset = textBlock.TextLayout.HitTestTextPosition(0);
 
             minOffsetX = offset.X - textLayoutWidth / 2;
@@ -179,11 +177,7 @@ public sealed class ShimmeringHelper
 
             OffsetY = offset.Y;
         }
-        else
-        {
-            _maskBrush.Size = new(width, _associatedObject.Bounds.Height);
-        }
-
+        
         UpdateAnimationKeyFrames(minOffsetX, OffsetY, maxOffsetX);
 
         if (IsActive)
@@ -210,15 +204,29 @@ public sealed class ShimmeringHelper
 
     private void StartAnimation()
     {
+        if (_associatedObject is TextBlock textBlock)
+        {
+            var textLayoutWidth = textBlock.TextLayout.Width;
+            _maskBrush.Size = new(textLayoutWidth, textBlock.TextLayout.Height);
+        }
+        else
+        {
+            _maskBrush.Size = new(_associatedObject.Bounds.Width, _associatedObject.Bounds.Height);
+        }
+
         ElementComposition.SetElementChildVisual(_associatedObject!, _maskBrush);
+        
         _maskBrush?.StartAnimation("Offset", _animation!);
     }
 
     private void StopAnimation()
     {
         ArgumentNullException.ThrowIfNull(_maskBrush);
+        
         _maskBrush.Offset = new Vector3D(-1 * _associatedObject.Bounds.Width, -_associatedObject.Bounds.Height,
             double.NegativeInfinity);
+        _maskBrush.Size = new(0, 0);
+        
         ElementComposition.SetElementChildVisual(_associatedObject!, null);
     }
 
